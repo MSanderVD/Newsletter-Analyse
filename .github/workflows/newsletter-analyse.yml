@@ -2,14 +2,10 @@ name: Newsletter-Analyse
 
 on:
   schedule:
-    # Täglich um 07:00 UTC (08:00 / 09:00 Uhr MEZ/MESZ)
     - cron: "0 7 * * *"
-    # Wöchentlich montags um 07:30 UTC
     - cron: "30 7 * * 1"
-    # Monatlich am 1. um 08:00 UTC
     - cron: "0 8 1 * *"
 
-  # Manueller Start zum Testen (im GitHub-Tab "Actions" → "Run workflow")
   workflow_dispatch:
     inputs:
       mode:
@@ -25,18 +21,21 @@ on:
 jobs:
   daily:
     name: Tagesanalyse
-    # Läuft täglich (aber nicht montags – da übernimmt weekly)
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'daily' ||
         github.event_name == 'schedule' && github.event.schedule == '0 7 * * *'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Dateien anzeigen (Debug)
+        run: ls -la
       - name: Abhängigkeiten installieren
         run: pip install -r requirements.txt
-        working-directory: ${{ github.workspace }}
       - name: Tagesanalyse ausführen
         env:
           GEMINI_API_KEY:            ${{ secrets.GEMINI_API_KEY }}
@@ -55,6 +54,9 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'weekly' ||
         github.event_name == 'schedule' && github.event.schedule == '30 7 * * 1'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -62,7 +64,6 @@ jobs:
           python-version: "3.11"
       - name: Abhängigkeiten installieren
         run: pip install -r requirements.txt
-        working-directory: ${{ github.workspace }}
       - name: Wochenanalyse ausführen
         env:
           GEMINI_API_KEY:            ${{ secrets.GEMINI_API_KEY }}
@@ -81,6 +82,9 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'monthly' ||
         github.event_name == 'schedule' && github.event.schedule == '0 8 1 * *'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -88,7 +92,6 @@ jobs:
           python-version: "3.11"
       - name: Abhängigkeiten installieren
         run: pip install -r requirements.txt
-        working-directory: ${{ github.workspace }}
       - name: Monatsanalyse ausführen
         env:
           GEMINI_API_KEY:            ${{ secrets.GEMINI_API_KEY }}
