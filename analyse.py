@@ -105,7 +105,7 @@ def analyse_with_gemini(emails: list[dict], period_label: str) -> str:
     api_key = os.environ["GEMINI_API_KEY"]
     url = (
         "https://generativelanguage.googleapis.com/v1beta/models/"
-        f"gemini-1.5-flash:generateContent?key={api_key}"
+        f"gemini-2.0-flash:generateContent?key={api_key}"
     )
 
     email_texts = []
