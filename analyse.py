@@ -147,8 +147,8 @@ for attempt in range(3):
         logger.info(f"Gemini 429 – warte {wait} Sekunden (Versuch {attempt+1}/3)")
         time.sleep(wait)
         continue
-resp.raise_for_status()
-break
+    resp.raise_for_status()
+    break
 
 data = resp.json()
 return data["candidates"][0]["content"]["parts"][0]["text"]
