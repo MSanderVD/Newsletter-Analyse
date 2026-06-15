@@ -138,11 +138,11 @@ Verwende einfaches HTML mit inline-Styles.
 Farben: Hintergrund weiß, Überschriften dunkelblau (#1a3a5c), Zebrastreifen in Tabellen (#f5f5f5).
 Antworte NUR mit dem HTML-Inhalt, kein Markdown, keine Erklärungen."""
 
-    payload = {"contents": [{"parts": [{"text": prompt}]}]}
-        for attempt in range(3):
+payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    import time
+    for attempt in range(3):
         resp = requests.post(url, json=payload, timeout=120)
         if resp.status_code == 429:
-            import time
             wait = 60 * (attempt + 1)
             logger.info(f"Gemini 429 – warte {wait} Sekunden (Versuch {attempt+1}/3)")
             time.sleep(wait)
@@ -152,7 +152,6 @@ Antworte NUR mit dem HTML-Inhalt, kein Markdown, keine Erklärungen."""
 
     data = resp.json()
     return data["candidates"][0]["content"]["parts"][0]["text"]
-
 
 # ---------------------------------------------------------------------------
 # OneDrive (Microsoft Graph, kostenlos mit Microsoft-Konto)
