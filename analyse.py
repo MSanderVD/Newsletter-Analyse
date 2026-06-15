@@ -139,8 +139,16 @@ Farben: Hintergrund weiß, Überschriften dunkelblau (#1a3a5c), Zebrastreifen in
 Antworte NUR mit dem HTML-Inhalt, kein Markdown, keine Erklärungen."""
 
     payload = {"contents": [{"parts": [{"text": prompt}]}]}
-    resp = requests.post(url, json=payload, timeout=120)
-    resp.raise_for_status()
+        for attempt in range(3):
+        resp = requests.post(url, json=payload, timeout=120)
+        if resp.status_code == 429:
+            import time
+            wait = 60 * (attempt + 1)
+            logger.info(f"Gemini 429 – warte {wait} Sekunden (Versuch {attempt+1}/3)")
+            time.sleep(wait)
+            continue
+        resp.raise_for_status()
+        break
 
     data = resp.json()
     return data["candidates"][0]["content"]["parts"][0]["text"]
