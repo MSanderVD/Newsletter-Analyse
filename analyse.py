@@ -150,8 +150,8 @@ for attempt in range(3):
     resp.raise_for_status()
     break
 
-data = resp.json()
-return data["candidates"][0]["content"]["parts"][0]["text"]
+    data = resp.json()
+    return data["candidates"][0]["content"]["parts"][0]["text"]
 
 # ---------------------------------------------------------------------------
 # OneDrive (Microsoft Graph, kostenlos mit Microsoft-Konto)
