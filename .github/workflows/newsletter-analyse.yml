@@ -48,6 +48,7 @@ jobs:
           ONEDRIVE_USER_EMAIL:       ${{ secrets.ONEDRIVE_USER_EMAIL }}
           ONEDRIVE_FOLDER_PATH:      ${{ secrets.ONEDRIVE_FOLDER_PATH }}
           REPORT_RECIPIENT_EMAIL:    ${{ secrets.REPORT_RECIPIENT_EMAIL }}
+          OPENROUTER_API_KEY:        ${{ secrets.OPENROUTER_API_KEY }}
         run: python analyse.py --mode daily
 
   weekly:
@@ -76,6 +77,7 @@ jobs:
           ONEDRIVE_USER_EMAIL:       ${{ secrets.ONEDRIVE_USER_EMAIL }}
           ONEDRIVE_FOLDER_PATH:      ${{ secrets.ONEDRIVE_FOLDER_PATH }}
           REPORT_RECIPIENT_EMAIL:    ${{ secrets.REPORT_RECIPIENT_EMAIL }}
+          OPENROUTER_API_KEY:        ${{ secrets.OPENROUTER_API_KEY }}
         run: python analyse.py --mode weekly
 
   monthly:
@@ -104,4 +106,5 @@ jobs:
           ONEDRIVE_USER_EMAIL:       ${{ secrets.ONEDRIVE_USER_EMAIL }}
           ONEDRIVE_FOLDER_PATH:      ${{ secrets.ONEDRIVE_FOLDER_PATH }}
           REPORT_RECIPIENT_EMAIL:    ${{ secrets.REPORT_RECIPIENT_EMAIL }}
+          OPENROUTER_API_KEY:        ${{ secrets.OPENROUTER_API_KEY }}
         run: python analyse.py --mode monthly
