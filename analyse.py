@@ -42,6 +42,7 @@ def get_gmail_service():
         client_secret=client_info["client_secret"],
         scopes=[
             "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/gmail.send",
         ],
     )
     return build("gmail", "v1", credentials=creds)
