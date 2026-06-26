@@ -157,6 +157,9 @@ def analyse_with_gemini(emails: list[dict], period_label: str) -> str:
         break
 
     data = resp.json()
+    if "choices" not in data:
+        logger.error(f"OpenRouter Antwort ohne choices: {data}")
+        raise ValueError(f"OpenRouter Fehler: {data.get('error', data)}")
     return data["choices"][0]["message"]["content"]
 
 # ---------------------------------------------------------------------------
