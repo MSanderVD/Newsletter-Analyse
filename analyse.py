@@ -138,7 +138,7 @@ def analyse_with_gemini(emails: list[dict], period_label: str) -> str:
         "HTTP-Referer": "https://github.com/MSanderVD/Newsletter-Analyse",
     }
     payload = {
-        "model": "mistralai/mistral-small-3.2-24b-instruct:free",
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
         "messages": [{"role": "user", "content": prompt}],
     }
     for attempt in range(3):
